@@ -1,45 +1,36 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-# ==============================
-# CONFIG
-# ==============================
 
-MODEL_NAME = "sshleifer/distilbart-cnn-12-6"
 
-INPUT_FILE = "daa.txt"                 # Your full book text
-CHUNKS_FILE = "chunks.txt"               # Intermediate
-OUTPUT_SUMMARY_FILE = "chunk_summaries.txt"
-FINAL_SUMMARY_FILE = "final_summary.txt"
+MODEL_NAME = "sshleifer/distilbart-cnn-12-6" #Using a small transformer model for chunk wise summarisation
 
-CHUNK_SIZE = 10000
+INPUT_FILE = "daa.txt" # File which contains whole book data
+CHUNKS_FILE = "chunks.txt" #Saving each chunk in a text file              
+OUTPUT_SUMMARY_FILE = "chunk_summaries.txt" #Saving all chunk wise summary in a file
+FINAL_SUMMARY_FILE = "final_summary.txt" #Creating a whole summary file
+
+CHUNK_SIZE = 10000 #Keeping chink larger to minimise time and iterations and keeping context memory high
 OVERLAP = 500
 
 MAX_NEW_TOKENS = 60
 MIN_NEW_TOKENS = 20
 
-# ==============================
-# LOAD MODEL
-# ==============================
 
 print("Loading model...")
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME) #Importing the tokeniser required for model
+model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME) #Importing the model
 model.to("cpu")
 print("Model loaded.\n")
 
-# ==============================
-# READ FULL TEXT
-# ==============================
 
+#Reading the input file
 def load_text(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
         return f.read()
 
-# ==============================
-# CHUNKING (same logic as before)
-# ==============================
 
+#Chunking the data , using the thresholds intialised at the start
 def split_text(text, size=CHUNK_SIZE, overlap=OVERLAP):
     chunks = []
     start = 0
@@ -49,42 +40,35 @@ def split_text(text, size=CHUNK_SIZE, overlap=OVERLAP):
         end = start + size
         chunk = text[start:end]
         chunks.append(chunk)
-        start = end - overlap
+        start = end - overlap #Overlapping the data to not lose context
 
     return chunks
-
+#Funtion to save each chunk in a text file
 def save_chunks(chunks):
     with open(CHUNKS_FILE, "w", encoding="utf-8") as f:
         for chunk in chunks:
             f.write("=====CHUNK=====\n")
             f.write(chunk.strip() + "\n")
-
-# ==============================
-# SUMMARIZATION
-# ==============================
-
+#Function to summarise each chunk 
 def summarize_chunk(text):
     inputs = tokenizer(
         text,
         return_tensors="pt",
-        truncation=True,
+        truncation=True, # Using turincation to summarise the chunk
         max_length=1024
-    )
+    )#Tokenising the input 
 
     summary_ids = model.generate(
         inputs["input_ids"],
-        max_new_tokens=MAX_NEW_TOKENS,
+        max_new_tokens=MAX_NEW_TOKENS,#Limiting the tokens , so that model will sumarise the data without mentioning
         min_new_tokens=MIN_NEW_TOKENS,
-        num_beams=4,
+        num_beams=4,#It is used to tell the model how many sequence to keep track of.
         no_repeat_ngram_size=3,
         early_stopping=True
     )
 
-    return tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+    return tokenizer.decode(summary_ids[0], skip_special_tokens=True) #Returning the decoded response. Converts encoded data into actual english text
 
-# ==============================
-# MAIN
-# ==============================
 
 def main():
 
@@ -106,15 +90,13 @@ def main():
             summaries.append(summary)
         except Exception as e:
             print("Error:", e)
-
-    # Save intermediate summaries
+#Storing chunk wise summary in text file
     with open(OUTPUT_SUMMARY_FILE, "w", encoding="utf-8") as f:
         for s in summaries:
             f.write(s.strip() + "\n")
 
-    # Combine final summary
     final_summary = " ".join(summaries)
-
+#Storing the final summary in the text file
     with open(FINAL_SUMMARY_FILE, "w", encoding="utf-8") as f:
         f.write(final_summary)
 

@@ -1,0 +1,15 @@
+services:
+  rag-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rag-app
+    volumes:
+      - ./ChromaDB:/app/ChromaDB        # Persist vector DB
+      - ./:/app                          # Mount project folder for live edits
+    environment:
+      OLLAMA_URL: "http://host.docker.internal:11434"
+      EMBED_MODEL: "nomic-embed-text"
+      LLM_MODEL: "mistral"
+    stdin_open: true
+    tty: true

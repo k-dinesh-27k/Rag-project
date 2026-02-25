@@ -1,3 +1,21 @@
-venv310/
+# Python environment
+venv/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
+
+# IDE / editor configs
+.vscode/
+.idea/
+
+# Env files
+.env

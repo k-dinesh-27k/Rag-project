@@ -1,0 +1,20 @@
+ This text appears to be a collection of information related to various topics in computer science and network security. Here's a brief overview of some of the subjects covered:
+
+1. Cryptography and Network Security: Concepts are explained clearly with numerous homework problems.
+2. Digital Signature: A code that acts as a signature is attached to a message by its creator.
+3. Symmetric Encryption: Encryption and decryption are performed using the same key.
+4. Undocumented Entry Points: Unauthorized access points in a program.
+5. Verified Operating System: A computer system that can be verified to implement a given security policy.
+6. Internet Standards Development: The Internet Society, Internet Engineering Task Force (IETF), and Internet Engineering Steering Group (IESG) are responsible for new standards and protocols for the Internet.
+7. Cryptographic Techniques: Techniques that obscure the statistical structure of plaintext.
+8. Firewall: A system that keeps unauthorized users out of a protected network.
+9. Distributed Denial of Service (DDoS) Attacks: Computer systems are made inaccessible by flooding servers, networks, or end-users with useless traffic.
+10. Bastion Host: A trusted system acting as a platform for an application-level or circuit-level packet-level gateway.
+11. Access Matrix: Represents access rights of subjects for objects.
+12. Common Criteria (CC) for Information Technology and Security Evaluation: An international initiative to develop security requirements and evaluation criteria.
+13. Rijndael Cryptosystem: A design principle for hash functions and a cryptographic technique.
+14. Password Security Improvements: A survey of improvements to password security.
+15. Kerberos Network Authentication: The use of encryption in Kerberos for network authentication.
+16. Probability Theory: Discussions about probability theory.
+17. RSA Encryption: How to encrypt properly with RSA.
+18. Will IAM STALLINGS Book on Computers and Data Communications: A comprehensive survey of data communications, networking, computer networks, and network security.
