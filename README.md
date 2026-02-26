@@ -1,4 +1,4 @@
-#Summarisation and RAG Implementation
+Summarisation and RAG Implementation
 
 Summarisation:(Summariser.py)
   Task: To summarize the given book named cryptography
