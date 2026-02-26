@@ -2,7 +2,7 @@
 
 ## Summarisation:(Summariser.py)
 
-Task: To summarize the given book named cryptography  
+Task: To summarize the given book named "Cryptography and networking principles" 
 
 Steps:
 
@@ -17,7 +17,7 @@ Steps:
 
 ## RAG:(Rag.py)
 
-Task: To implement RAG system to the given book named cryptography  
+Task: To implement RAG system to the given book named "Cryptography and networking principles"   
 
 Steps:
 
